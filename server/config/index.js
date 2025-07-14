@@ -14,6 +14,8 @@ module.exports = {
   SMTP_PORT:process.env.SMTP_PORT || '465',
   SMTP_MAIL:process.env.SMTP_MAIL || '',
   SMTP_PASSWORD:process.env.SMTP_PASSWORD || '',
+  google_client_id:process.env.GOOGLE_CLIENT_ID || '',
+  google_client_secret:process.env.GOOGLE_CLIENT_SECRET || '',
 }
 
 

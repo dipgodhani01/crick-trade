@@ -10,7 +10,7 @@ const RoutesPaths = [
   },
   {
     path: "/login",
-    component: lazy(() => import("../auth/CreateAccount")),
+    component: lazy(() => import("../auth/GoogleOAuthWrapper")),
     meta: {
       authRoute: false,
     },
