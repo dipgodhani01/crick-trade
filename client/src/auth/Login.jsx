@@ -1,14 +1,16 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { googleAuth } from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const responseGoogle = async (authResult) => {
     try {
       if (authResult["code"]) {
         const result = await googleAuth(authResult["code"]);
-        console.log("Result", result.data);
+        console.log("Result", result);
+        navigate("/home");
       }
-      console.log("authResult", authResult);
     } catch (error) {
       console.log("Error while requesting google code! ", error);
     }

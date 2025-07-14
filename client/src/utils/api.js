@@ -1,7 +1,11 @@
 import axios from 'axios';
 const api = axios.create({
     // baseURL: process.env.BASE_URL
-    baseURL: `http://localhost:4300/api`
+    baseURL: import.meta.env.VITE_BASE_URL,
+          withCredentials: true,
+        
 })
 
 export const googleAuth = (code) => api.get(`/auth/google?code=${code}`);
+export const getProfile = () => api.get(`/auth/profile`,);
+export const logoutUser = () => api.get(`/auth/logout`,);

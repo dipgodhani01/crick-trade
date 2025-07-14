@@ -5,9 +5,11 @@ const mongoose = require("mongoose");
 const { port, uri } = require("./config");
 const { logger } = require("./utils");
 const userAuthRouter = require('./routes/client/user');
+const cookieParser = require("cookie-parser");
+
 
 const app = express();
-
+app.use(cookieParser()); 
 
 mongoose
   .connect(uri)
