@@ -7,8 +7,11 @@ function Login() {
   const responseGoogle = async (authResult) => {
     try {
       if (authResult["code"]) {
-        const result = await googleAuth(authResult["code"]);
-        console.log("Result", result);
+        const res = await googleAuth(authResult["code"]);
+        const { name, email, image } = res.data.user;
+        const token = res.data.token;
+        const obj = { name, email, image, token };
+        localStorage.setItem("cricktrade-userinfo", JSON.stringify(obj));
         navigate("/home");
       }
     } catch (error) {

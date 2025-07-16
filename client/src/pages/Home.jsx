@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { getProfile, logoutUser } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -7,32 +6,20 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const res = await getProfile();
-        setUser(res.data.data);
-      } catch (error) {
-        console.error("Error fetching profile:", error);
-      }
-    };
-
-    fetchProfile();
+    const data = localStorage.getItem("cricktrade-userinfo");
+    const userData = JSON.parse(data);
+    setUser(userData);
   }, []);
 
-  async function logout() {
-    try {
-      const res = await logoutUser();
-      if (res.status) {
-        navigate("login");
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-  }
+  const logout = () => {
+    localStorage.removeItem("cricktrade-userinfo");
+    navigate("/login");
+  };
 
   return (
     <div className="p-6">
-      <h2 className="text-xl">Welcome, {user?.name}</h2>
+      <img src={user?.image} alt="user" />
+      <h2 className="text-xl">Welcome,{user?.name}</h2>
       <p>Email: {user?.email}</p>
       <button className="text-red-500 mt-4 block" onClick={logout}>
         Logout

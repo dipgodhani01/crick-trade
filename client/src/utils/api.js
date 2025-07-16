@@ -7,5 +7,3 @@ const api = axios.create({
 })
 
 export const googleAuth = (code) => api.get(`/auth/google?code=${code}`);
-export const getProfile = () => api.get(`/auth/profile`,);
-export const logoutUser = () => api.get(`/auth/logout`,);

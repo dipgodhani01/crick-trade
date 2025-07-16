@@ -1,26 +1,30 @@
-import { Suspense } from "react";
 import "./App.css";
-import { Toaster } from "react-hot-toast";
-import Router from "./Routers/Router";
-import { BrowserRouter } from "react-router-dom";
-import Loader from "./components/common/Loader";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import GoogleOAuthWrapper from "./auth/GoogleOAuthWrapper";
+import Home from "./pages/Home";
+import PageNotFound from "./pages/PageNotFound";
+import Layout from "./layouts/Layout";
+import { useState } from "react";
+import RefreshHandler from "./helper/RefreshHandler";
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const PrivateRoute = ({ element }) => {
+    return isAuthenticated ? element : <Navigate to="/login" />;
+  };
+
   return (
     <BrowserRouter>
-      <Toaster
-        position="bottom-left"
-        reverseOrder={false}
-        toastOptions={{
-          duration: 3500,
-        }}
-        containerStyle={{
-          zIndex: 99999999,
-        }}
-      />
-      <Suspense fallback={<Loader />}>
-        <Router />
-      </Suspense>
+      <RefreshHandler setIsAuthenticated={setIsAuthenticated} />
+      <Routes>
+        <Route path="/login" element={<GoogleOAuthWrapper />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate to="/home" replace />} />
+          <Route path="home" element={<PrivateRoute element={<Home />} />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

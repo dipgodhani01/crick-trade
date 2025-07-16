@@ -6,19 +6,5 @@ exports.generateToken = (payload) => {
   });
 };
 
-exports.setTokenCookie = (res, token) => {
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure:false,
-    sameSite: "Lax",
-    maxAge: 1000 * 60 * 60 * 24, 
-  });
-};
 
-exports.clearTokenCookie = (res) => {
-
-  res.clearCookie("token", {
-    httpOnly: true,
-    secure: false,
-  });
-};
+  
