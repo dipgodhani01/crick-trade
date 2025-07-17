@@ -9,11 +9,10 @@ const cookieParser = require("cookie-parser");
 
 
 const app = express();
-app.use(cookieParser()); 
 
 mongoose
-  .connect(uri)
-  .then(() => logger.info("successfully connected to database"))
+.connect(uri)
+.then(() => logger.info("successfully connected to database"))
   .catch((err) => {
     logger.error("Error", {
       message: err?.message || "No error message",
@@ -30,6 +29,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser()); 
 
 app.use('/api/auth',userAuthRouter)
 

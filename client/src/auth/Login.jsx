@@ -1,17 +1,15 @@
 import { useGoogleLogin } from "@react-oauth/google";
 import { googleAuth } from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import googleIcon from "../assets/google_icon.png";
 
-function Login() {
+function Login({ setOpenModal }) {
   const navigate = useNavigate();
   const responseGoogle = async (authResult) => {
     try {
       if (authResult["code"]) {
-        const res = await googleAuth(authResult["code"]);
-        const { name, email, image } = res.data.user;
-        const token = res.data.token;
-        const obj = { name, email, image, token };
-        localStorage.setItem("cricktrade-userinfo", JSON.stringify(obj));
+        setOpenModal(false);
+        await googleAuth(authResult["code"]);
         navigate("/home");
       }
     } catch (error) {
@@ -26,13 +24,16 @@ function Login() {
   });
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <button
-        onClick={googleLogin}
-        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      >
-        Sign in with Google
-      </button>
+    <div className="">
+      <div className="flex justify-center items-center">
+        <button
+          onClick={googleLogin}
+          className="px-4 py-1.5 bg-blue-300 text-white rounded hover:bg-blue-700 flex gap-2 items-center text-xl transition-all duration-200"
+        >
+          <img src={googleIcon} alt="googleIcon" />
+          <span>Sign in with Google</span>
+        </button>
+      </div>
     </div>
   );
 }

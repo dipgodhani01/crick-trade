@@ -1,7 +1,7 @@
-const User = require("../../models/User");
 const axios = require("axios");
 const { oauth2client } = require("../../utils/googleConfig");
 const jwt = require("jsonwebtoken");
+const User = require("../../models/User");
 
 exports.createAccount = async (req, res) => {
   try {
@@ -27,6 +27,11 @@ exports.createAccount = async (req, res) => {
       expiresIn: process.env.JWT_TIMEOUT,
     });
 
+    res.cookie("token", token, {
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    });
+
     return res.status(200).json({
       status: true,
       message: `Account created successfully!`,
@@ -37,5 +42,20 @@ exports.createAccount = async (req, res) => {
     return res
       .status(400)
       .json({ status: false, message: err.message, data: {} });
+  }
+};
+
+exports.getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    res.status(200).json({
+      status: true,
+      user,
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: false,
+      message: "Error fetching profile",
+    });
   }
 };
