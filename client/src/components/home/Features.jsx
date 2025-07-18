@@ -32,19 +32,19 @@ function Features() {
       <br />
       <div className="sm:p-4 p-2 mt-4 mb-4 text-start">
         <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-          What is BidAthlete?
+          What is Cricktrade?
         </h1>
         <p className="text-base sm:text-lg text-gray-800">
-          BidAthlete is an online player auction software that helps tournament
+          Cricktrade is an online player auction software that helps tournament
           organizers to conduct auction of players with multiple sports options
           available like cricket, football, volleyball, kabaddi etc. We also
           provide live streaming overlay and real-time updates.
         </p>
         <p className="mt-2 text-base sm:text-lg text-gray-800">
           For Tournament Organizers, maintaining excel sheets for each and every
-          task becomes really tedious and that is where BidAthlete comes in
+          task becomes really tedious and that is where Cricktrade comes in
           where everything is automated and you can download data anytime you
-          want. BidAthlete also helps you get more sponsors for your tournament
+          want. Cricktrade also helps you get more sponsors for your tournament
           as you can advertize your sponsors on the auction screen.
         </p>
       </div>

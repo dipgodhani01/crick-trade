@@ -7,7 +7,7 @@ function Steps() {
       <h1 className="text-3xl font-bold">Steps</h1>
       <p className="text-base sm:text-xl">
         Here are the steps you need to complete in order to do a successful
-        auction on BidAthlete.
+        auction on Cricktrade.
       </p>
       <br />
       <div>

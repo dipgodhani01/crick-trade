@@ -1,14 +1,14 @@
-import { privacyData } from "../data/privacy";
+import { termsData } from "../data/terms";
 
-function PrivacyPolicy() {
+function Terms() {
   return (
     <div className="container mx-auto p-6">
       <div>
         <h1 className="text-3xl font-bold md:py-20 py-8 text-center">
-          Privacy Policy
+          Terms & Conditions
         </h1>
       </div>
-      {privacyData.map((section, index) => (
+      {termsData.map((section, index) => (
         <div key={index} className="mb-6">
           <h2 className="text-base md:text-lg font-semibold text-blue-600 mb-1">
             {section.title}
@@ -22,4 +22,4 @@ function PrivacyPolicy() {
   );
 }
 
-export default PrivacyPolicy;
+export default Terms;

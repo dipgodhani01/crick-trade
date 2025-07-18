@@ -1,8 +1,8 @@
 export const navLinks = [
-  { name: "Home" },
-  { name: "About" },
-  { name: "create" },
-  { name: "Logout" },
+  { name: "Home", link: "/home" },
+  { name: "About", link: "/about-us" },
+  { name: "Blog" },
+  { name: "Contact Us", link: "/contact" },
 ];
 export const createAccountFields = [
   {

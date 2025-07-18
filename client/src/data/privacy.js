@@ -1,4 +1,3 @@
-// privacyData.js
 export const privacyData = [
   {
     title: "SECTION 1 - WHAT DO WE DO WITH YOUR INFORMATION?",
@@ -18,7 +17,7 @@ If we ask for your personal information for a secondary reason, like marketing, 
 
 How do I withdraw my consent?
 
-If after you opt-in, you change your mind, you may withdraw your consent for us to contact you, for the continued collection, use or disclosure of your information, at anytime, by contacting us at bidathlete@gmail.com`,
+If after you opt-in, you change your mind, you may withdraw your consent for us to contact you, for the continued collection, use or disclosure of your information, at anytime, by contacting us at cricktrade@gmail.com`,
   },
   {
     title: "SECTION 3 - DISCLOSURE",

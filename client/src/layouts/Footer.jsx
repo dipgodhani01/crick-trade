@@ -10,16 +10,19 @@ function Footer() {
           <div className="text-center p-4 ">
             <ul className="flex sm:flex-row flex-col sm:gap-8 gap-2 flex-wrap justify-center">
               <li>
-                <Link>About</Link>
+                <Link to="/about-us">About</Link>
               </li>
               <li>
                 <Link to="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <Link>Terms & Conditions</Link>
+                <Link to="/terms">Terms & Conditions</Link>
               </li>
               <li>
-                <Link>Contact Us</Link>
+                <Link to="/refund-cancellation">Refunds and Cancellation</Link>
+              </li>
+              <li>
+                <Link to="contact">Contact Us</Link>
               </li>
             </ul>
           </div>

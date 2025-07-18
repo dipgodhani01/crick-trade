@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { navLinks } from "../data";
 import icon from "../assets/icon.png";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,16 +12,17 @@ const Navbar = () => {
   return (
     <nav className="bg-black text-white shadow-md">
       <div className="max-w-7xl mx-auto p-4 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <img src={icon} alt="" />
-
-          <h1 className="text-2xl font-bold text-yellow-300">CrickTrade</h1>
-        </div>
+        <Link to="/home">
+          <div className="flex items-center gap-2">
+            <img src={icon} alt="" />
+            <h1 className="text-2xl font-bold text-yellow-300">CrickTrade</h1>
+          </div>
+        </Link>
 
         <ul className="hidden md:flex space-x-6 font-medium">
           {navLinks.map((link) => (
             <li key={link.name}>
-              <a href="" className="hover:text-yellow-300 transition">
+              <a href={link.link} className="hover:text-yellow-300 transition">
                 {link.name}
               </a>
             </li>
