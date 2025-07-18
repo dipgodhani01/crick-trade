@@ -2,6 +2,7 @@ import { useState } from "react";
 import bannerImg from "../assets/home_banner.jpg";
 import GoogleOAuthWrapper from "../auth/GoogleOAuthWrapper";
 import Features from "../components/home/Features";
+import Steps from "../components/home/Steps";
 
 function Home() {
   const [openModal, setOpenModal] = useState(false);
@@ -52,6 +53,8 @@ function Home() {
       </div>
       <br />
       <Features />
+      <br />
+      <Steps />
     </div>
   );
 }

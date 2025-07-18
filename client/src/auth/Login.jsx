@@ -1,16 +1,19 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import { googleAuth } from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import googleIcon from "../assets/google_icon.png";
+import { loginWithGoogle } from "../redux/slice/userSlice";
+import { useDispatch } from "react-redux";
 
 function Login({ setOpenModal }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const responseGoogle = async (authResult) => {
     try {
       if (authResult["code"]) {
         setOpenModal(false);
-        await googleAuth(authResult["code"]);
-        navigate("/home");
+        await dispatch(loginWithGoogle(authResult["code"]));
+        navigate("/dashboard");
       }
     } catch (error) {
       console.log("Error while requesting google code! ", error);

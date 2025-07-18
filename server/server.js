@@ -3,23 +3,16 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const { port, uri } = require("./config");
-const { logger } = require("./utils");
-const userAuthRouter = require('./routes/client/user');
-const cookieParser = require("cookie-parser");
 
+const userAuthRouter = require("./routes/client/user");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 
 mongoose
-.connect(uri)
-.then(() => logger.info("successfully connected to database"))
-  .catch((err) => {
-    logger.error("Error", {
-      message: err?.message || "No error message",
-      stack: err?.stack,
-      fullError: err,
-    });
-  });
+  .connect(uri)
+  .then(() => console.log("successfully connected to database"))
+  .catch((err) => console.log("Error : ", err));
 
 app.use(express.json());
 app.use(
@@ -29,8 +22,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser()); 
+app.use(cookieParser());
 
-app.use('/api/auth',userAuthRouter)
+app.use("/api/auth", userAuthRouter);
 
-app.listen(port, () => logger.info(`Server up at port ${port}`));
+app.listen(port, () => console.log(`Server up at port ${port}`));

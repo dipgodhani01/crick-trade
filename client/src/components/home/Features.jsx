@@ -30,7 +30,7 @@ function Features() {
         </div>
       </div>
       <br />
-      <div className="sm:p-4 mt-4 mb-4 text-start">
+      <div className="sm:p-4 p-2 mt-4 mb-4 text-start">
         <h1 className="text-2xl sm:text-3xl font-bold mb-2">
           What is BidAthlete?
         </h1>
