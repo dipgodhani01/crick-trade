@@ -6,6 +6,7 @@ import Layout from "./layouts/Layout";
 import ProtectedRoute from "./helper/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import { ToastContainer } from "react-toastify";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   return (
@@ -14,6 +15,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="/home" replace />} />
           <Route path="home" element={<Home />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
+
           <Route path="*" element={<PageNotFound />} />
         </Route>
         <Route

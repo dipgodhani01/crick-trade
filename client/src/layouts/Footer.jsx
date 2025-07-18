@@ -13,7 +13,7 @@ function Footer() {
                 <Link>About</Link>
               </li>
               <li>
-                <Link>Privacy Policy</Link>
+                <Link to="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
                 <Link>Terms & Conditions</Link>
