@@ -29,7 +29,7 @@ function AddAuction() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
 
@@ -43,9 +43,10 @@ function AddAuction() {
     data.append("playersPerTeam", formData.playersPerTeam);
     data.append("userId", userId);
 
-    dispatch(createAuction(data));
-
-    navigate("/dashboard");
+    const res = await dispatch(createAuction(data));
+    if (res.payload.success) {
+      navigate("/dashboard");
+    }
   };
 
   return (

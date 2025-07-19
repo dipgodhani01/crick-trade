@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slice/userSlice";
 import { MdMenu, MdClose } from "react-icons/md";
 import { TiHome } from "react-icons/ti";
 import { Link } from "react-router-dom";
+import { getUsersAuction } from "../../redux/slice/auctionSlice";
 
 function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
+
+  const userId = user._id;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,6 +19,10 @@ function DashboardLayout() {
     dispatch(logout());
     navigate("/home");
   }
+
+  useEffect(() => {
+    dispatch(getUsersAuction(userId));
+  }, []);
 
   return (
     <div className="min-h-screen flex bg-gray-100">
@@ -51,7 +58,7 @@ function DashboardLayout() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        <div className="bg-white p-3 shadow flex justify-between md:justify-end items-center sticky top-0 z-10">
+        <div className="bg-white p-3.5 shadow flex justify-between md:justify-end items-center sticky top-0 z-10">
           <button
             className="md:hidden"
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -63,7 +70,7 @@ function DashboardLayout() {
             )}
           </button>
           <button
-            className="bg-red-500 rounded px-4 py-1.5 text-white"
+            className="bg-red-500 rounded px-4 py-1 text-white"
             onClick={logoutUser}
           >
             Logout
