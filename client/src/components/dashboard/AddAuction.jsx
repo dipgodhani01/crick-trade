@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { formFieldsData } from "../../data/addAuction";
 import Formfields from "../common/Formfields";
+import { useDispatch, useSelector } from "react-redux";
+import { createAuction } from "../../redux/slice/auctionSlice";
+import { useNavigate } from "react-router-dom";
 
 function AddAuction() {
   const [formData, setFormData] = useState({
@@ -13,6 +16,10 @@ function AddAuction() {
     bidIncrement: "",
     playersPerTeam: "",
   });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userId = useSelector((state) => state.user.user._id);
+  const { loading } = useSelector((state) => state.auction);
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
@@ -24,7 +31,21 @@ function AddAuction() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted Data:", formData);
+    const data = new FormData();
+
+    data.append("logo", formData.logo);
+    data.append("name", formData.name);
+    data.append("date", formData.date);
+    data.append("sportType", formData.sportType);
+    data.append("pointPerTeam", formData.pointPerTeam);
+    data.append("minimumBid", formData.minimumBid);
+    data.append("bidIncrement", formData.bidIncrement);
+    data.append("playersPerTeam", formData.playersPerTeam);
+    data.append("userId", userId);
+
+    dispatch(createAuction(data));
+
+    navigate("/dashboard");
   };
 
   return (
@@ -33,36 +54,34 @@ function AddAuction() {
       <div className="mt-6 xl:w-[70%]">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {formFieldsData.map((field, i) => {
-              return (
-                <Formfields
-                  key={i}
-                  label={field.label}
-                  name={field.name}
-                  type={field.type}
-                  value={
-                    field.type === "file" ? undefined : formData[field.name]
-                  }
-                  onChange={handleChange}
-                  options={field.options}
-                  placeholder={field.placeholder}
-                  required={field.required}
-                />
-              );
-            })}
+            {formFieldsData.map((field, i) => (
+              <Formfields
+                key={i}
+                label={field.label}
+                name={field.name}
+                type={field.type}
+                value={field.type === "file" ? undefined : formData[field.name]}
+                onChange={handleChange}
+                options={field.options}
+                placeholder={field.placeholder}
+                required={field.required}
+              />
+            ))}
           </div>
 
           <button
             type="submit"
-            className="mt-4 px-4 bg-green-600  text-white py-2 rounded hover:bg-green-800 transition"
+            className="mt-4 px-4 bg-green-600 text-white py-2 rounded hover:bg-green-800 transition"
+            disabled={loading}
           >
-            Create Auction
+            {loading ? "Creating..." : "Create Auction"}
           </button>
           <button
             className="ml-4 py-2 bg-red-500 hover:bg-red-700 rounded px-6 text-white transition"
             onClick={() => setFormData({})}
+            type="button"
           >
-            Cancle
+            Cancel
           </button>
         </form>
       </div>

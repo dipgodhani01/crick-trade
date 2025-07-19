@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
-const { table } = require("../config/tables");
 
 const UserSchema = new Schema({
   name: String,
@@ -8,4 +7,4 @@ const UserSchema = new Schema({
   image:String,
 });
 
-module.exports = mongoose.model(table.users, UserSchema);
+module.exports = mongoose.model('Users', UserSchema);

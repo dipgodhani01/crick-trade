@@ -16,7 +16,7 @@ function DashboardLayout() {
     dispatch(logout());
     navigate("/home");
   }
-  console.log(user);
+
   return (
     <div className="min-h-screen flex bg-gray-100">
       {/* Sidebar */}

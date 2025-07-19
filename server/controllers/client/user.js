@@ -27,11 +27,6 @@ exports.createAccount = async (req, res) => {
       expiresIn: process.env.JWT_TIMEOUT,
     });
 
-    res.cookie("token", token, {
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-      httpOnly: true,
-    });
-
     return res.status(200).json({
       status: true,
       message: `Account created successfully!`,

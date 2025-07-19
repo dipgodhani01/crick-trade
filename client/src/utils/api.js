@@ -7,3 +7,4 @@ const api = axios.create({
 
 export const googleAuth = (code) => api.get(`/auth/google?code=${code}`);
 export const userProfile = () => api.get(`/auth/profile`);
+export const createAuc = (formData) => api.post(`/auction/create-auction`,formData);

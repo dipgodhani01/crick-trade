@@ -17,7 +17,7 @@ const Formfields = ({
             value={value}
             onChange={onChange}
             required={required}
-            className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black"
+            className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black"
           >
             <option value="">Select {label}</option>
             {options.map((option, idx) => (
