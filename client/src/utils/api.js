@@ -9,3 +9,6 @@ export const googleAuth = (code) => api.get(`/auth/google?code=${code}`);
 export const userProfile = () => api.get(`/auth/profile`);
 export const createAuc = (formData) => api.post(`/auction/create-auction`,formData);
 export const getAuctions = (userId) => api.get(`/auction/get/${userId}`);
+export const getSingleAuction = (auctionId) => api.get(`/auction/one-auction/${auctionId}`);
+export const updateAuctionApi = (auctionId, formData) => api.put(`/auction/update/${auctionId}`,formData);
+export const deleteAuction = (userId) => api.delete(`/auction/delete/${userId}`);

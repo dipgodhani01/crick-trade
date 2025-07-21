@@ -8,14 +8,13 @@
 }
 
 .table-responsive::-webkit-scrollbar {
-  width: 6px !important;
-  height: 6px !important;
+  height: 9px !important;
   overflow: hidden;
 }
 
 .table-responsive::-webkit-scrollbar-thumb {
-  background-color: #626bd2 !important;
-  border-radius: 4px;
+  background-color: #a3a3a3 !important;
+  border-radius: 10px;
 }
 
 .homeBannerSection{

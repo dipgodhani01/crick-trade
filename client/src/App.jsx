@@ -12,7 +12,8 @@ import Refund from "./pages/Refund";
 import ContactUs from "./pages/ContactUs";
 import DashboardLayout from "./components/dashboard/DashboardLayout";
 import Dashboard from "./pages/Dashboard";
-import AddAuction from "./components/dashboard/AddAuction";
+import AddAuction from "./components/dashboard/auction/AddAuction";
+import EditAuction from "./components/dashboard/auction/EditAuction";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         >
           <Route index element={<Dashboard />} />
           <Route path="auction-add" element={<AddAuction />} />
+          <Route path="auction-edit/:auctionId" element={<EditAuction />} />
         </Route>
       </Routes>
       <ToastContainer position="bottom-right" autoClose={1500} />

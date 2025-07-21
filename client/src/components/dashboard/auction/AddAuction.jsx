@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { formFieldsData } from "../../data/addAuction";
-import Formfields from "../common/Formfields";
 import { useDispatch, useSelector } from "react-redux";
-import { createAuction } from "../../redux/slice/auctionSlice";
 import { useNavigate } from "react-router-dom";
+import Formfields from "../../common/Formfields";
+import { formFieldsData } from "../../../data/addAuction";
+import { createAuction } from "../../../redux/slice/auctionSlice";
 
 function AddAuction() {
   const [formData, setFormData] = useState({
@@ -16,6 +16,8 @@ function AddAuction() {
     bidIncrement: "",
     playersPerTeam: "",
   });
+  const [logoPreview, setLogoPreview] = useState(null);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userId = useSelector((state) => state.user.user._id);
@@ -23,10 +25,13 @@ function AddAuction() {
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "file" ? files[0] : value,
-    }));
+    if (type === "file") {
+      const file = files[0];
+      setFormData((prev) => ({ ...prev, [name]: file }));
+      setLogoPreview(URL.createObjectURL(file));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -55,6 +60,13 @@ function AddAuction() {
       <div className="mt-6 xl:w-[70%]">
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {logoPreview && (
+              <img
+                src={logoPreview}
+                alt="Logo Preview"
+                className="w-32 h-32 object-contain border rounded"
+              />
+            )}
             {formFieldsData.map((field, i) => (
               <Formfields
                 key={i}
@@ -79,7 +91,7 @@ function AddAuction() {
           </button>
           <button
             className="ml-4 py-2 bg-red-500 hover:bg-red-700 rounded px-6 text-white transition"
-            onClick={() => setFormData({})}
+            onClick={() => navigate(-1)}
             type="button"
           >
             Cancel
