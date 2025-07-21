@@ -4,9 +4,13 @@ import { toast } from "react-toastify";
 
 export const createAuction = createAsyncThunk(
   "auction/createAuction",
-  async (formData, { rejectWithValue }) => {
+  async (formData, { rejectWithValue, dispatch, getState }) => {
     try {
       const response = await createAuc(formData);
+      const userId = getState().user.user._id;
+
+      dispatch(getUsersAuction(userId));
+      
       toast.success(response.data.message);
       return response.data;
     } catch (error) {
@@ -17,6 +21,7 @@ export const createAuction = createAsyncThunk(
     }
   }
 );
+
 
 export const getUsersAuction = createAsyncThunk(
   "auction/getUsersAuction",

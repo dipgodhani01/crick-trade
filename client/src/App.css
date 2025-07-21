@@ -6,17 +6,17 @@
   box-sizing: border-box;
  font-family: "Jost", sans-serif;
 }
-/* 
+
 .table-responsive::-webkit-scrollbar {
-  width: 5px !important;
-  height: 5px !important;
+  width: 6px !important;
+  height: 6px !important;
   overflow: hidden;
 }
 
 .table-responsive::-webkit-scrollbar-thumb {
   background-color: #626bd2 !important;
-  border-radius: 2px;
-} */
+  border-radius: 4px;
+}
 
 .homeBannerSection{
   background-image: url('./assets/home_banner.jpg');

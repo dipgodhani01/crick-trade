@@ -40,7 +40,7 @@ function App() {
           <Route path="auction-add" element={<AddAuction />} />
         </Route>
       </Routes>
-      <ToastContainer position="bottom-left" autoClose={1500} />
+      <ToastContainer position="bottom-right" autoClose={1500} />
     </BrowserRouter>
   );
 }

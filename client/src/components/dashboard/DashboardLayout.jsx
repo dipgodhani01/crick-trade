@@ -1,88 +1,116 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slice/userSlice";
-import { MdMenu, MdClose } from "react-icons/md";
-import { TiHome } from "react-icons/ti";
-import { Link } from "react-router-dom";
 import { getUsersAuction } from "../../redux/slice/auctionSlice";
+import { toggleSidebar } from "../../redux/slice/layoutSlice";
+import logo from "../../assets/icon2.png";
+import { LuLogOut } from "react-icons/lu";
+import { ImHammer2 } from "react-icons/im";
+import { RiMenuUnfold3Fill, RiMenuUnfold4Fill } from "react-icons/ri";
 
 function DashboardLayout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const user = useSelector((state) => state.user.user);
-
-  const userId = user._id;
+  const isSidebarOpen = useSelector((state) => state?.sidebar?.isSidebarOpen);
+  const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userId = user?._id;
 
   function logoutUser() {
     dispatch(logout());
     navigate("/home");
   }
 
+  function handleSidebarToggle() {
+    dispatch(toggleSidebar());
+  }
+
   useEffect(() => {
-    dispatch(getUsersAuction(userId));
-  }, []);
+    if (userId) dispatch(getUsersAuction(userId));
+  }, [dispatch, userId]);
 
   return (
-    <div className="min-h-screen flex bg-gray-100">
-      {/* Sidebar */}
+    <>
+      {/* Header */}
       <div
-        className={`fixed md:relative z-30 transition-all duration-300 ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 w-64 bg-white shadow-lg h-screen`}
+        className={`h-[65px] fixed left-0 right-0 top-0 flex gap-2 border  items-center p-2 md:p-4 transition-all ease-in-out duration-300 z-[40]  bg-gradient-to-br bg-white`}
       >
-        <div className="p-4 font-bold text-xl border-b flex justify-between items-center">
-          <span>Cricktrade</span>
-          <button onClick={() => setSidebarOpen(false)}>
-            <MdClose className="md:hidden h-6 w-6" />
-          </button>
+        <div className="flex items-center gap-2 md:w-[265px] w-[60px]">
+          <img src={logo} alt="logo" className="w-10 h-10" />
+          <h1 className="text-2xl font-bold md:block ">Cricktrade</h1>
         </div>
-        <ul className="p-4 space-y-2">
-          <Link to="/dashboard">
-            <li className="hover:bg-gray-200 p-2 rounded cursor-pointer text-lg font-medium flex items-center gap-2">
-              <TiHome size={22} />
-              <span>My Auction</span>
-            </li>
-          </Link>
-        </ul>
+        <div className="flex items-center justify-end w-full lg:justify-between ">
+          <div className="items-center justify-center hidden gap-2 lg:flex">
+            <button className={`rounded-full`} onClick={handleSidebarToggle}>
+              {isSidebarOpen ? (
+                <RiMenuUnfold3Fill size={24} />
+              ) : (
+                <RiMenuUnfold4Fill size={24} />
+              )}
+            </button>
+          </div>
+          <div className="flex items-center gap-2 md:gap-3">
+            <button
+              className={`rounded-full  block lg:hidden`}
+              onClick={handleSidebarToggle}
+            >
+              {isSidebarOpen ? (
+                <RiMenuUnfold4Fill size={24} />
+              ) : (
+                <RiMenuUnfold3Fill size={24} />
+              )}
+            </button>
+            <button className="text-red-600" onClick={logoutUser}>
+              <LuLogOut size={20} />
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* Overlay for mobile sidebar */}
-      {sidebarOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-30 z-20 h-screen md:hidden"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
-
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        <div className="bg-white p-3.5 shadow flex justify-between md:justify-end items-center sticky top-0 z-10">
+      <div
+        className={`p-4 mt-[65px] w-full transition-all duration-300 ease-in-out bg-gray-100 ${
+          isSidebarOpen ? "lg:w-[calc(100vw-260px)] lg:ml-[260px]" : "ml-0"
+        }`}
+      >
+        <Outlet />
+      </div>
+
+      {/* Sidebar */}
+      <div
+        className={`fixed h-[calc(100vh-65px)] top-[65px] bg-white transition-all duration-300 ease-in-out overflow-hidden z-[40] border-r ${
+          isSidebarOpen ? "w-[260px]" : "w-0"
+        }`}
+      >
+        <div>
+          <ul className="p-4">
+            <li className="w-full">
+              <Link
+                to="/dashboard"
+                className="flex bg-gray-200 p-1.5 w-full rounded hover:bg-gray-300 gap-2 items-center text-lg font-medium"
+              >
+                <span>
+                  <ImHammer2 />
+                </span>
+                My Auction
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <div className="text-center p-4">
           <button
-            className="md:hidden"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            {sidebarOpen ? (
-              <MdClose className="h-6 w-6" />
-            ) : (
-              <MdMenu className="h-6 w-6" />
-            )}
-          </button>
-          <button
-            className="bg-red-500 rounded px-4 py-1 text-white"
+            className="flex gap-1 items-center justify-center bg-red-500 p-1.5 w-fit px-4 rounded mx-auto text-white"
             onClick={logoutUser}
           >
+            <span>
+              <LuLogOut size={16} />
+            </span>
             Logout
           </button>
         </div>
-
-        {/* Page Content */}
-        <div className="p-6">
-          <Outlet />
-        </div>
       </div>
-    </div>
+    </>
   );
 }
 
