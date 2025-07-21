@@ -58,13 +58,13 @@ function Dashboard() {
                             className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full"
                             onClick={() => editAuction(data._id)}
                           >
-                            <MdEdit />
+                            <MdEdit size={20} />
                           </button>
                           <button
                             className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full"
                             onClick={() => handleDeleteAuction(data._id)}
                           >
-                            <MdDelete />
+                            <MdDelete size={20} />
                           </button>
                         </div>
                       </td>
@@ -72,7 +72,7 @@ function Dashboard() {
                         <img
                           src={data?.logo}
                           alt="logo"
-                          className="w-10 h-10 object-cover rounded"
+                          className="w-16 h-12 object-cover rounded"
                         />
                       </td>
                       <td className="border border-gray-200 px-4 py-2">

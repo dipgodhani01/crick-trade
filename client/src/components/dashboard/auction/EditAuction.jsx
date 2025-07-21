@@ -10,6 +10,7 @@ import { formFieldsData } from "../../../data/addAuction";
 
 function EditAuction() {
   const [formData, setFormData] = useState({});
+  const [logoPreview, setLogoPreview] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { auctionId } = useParams();
@@ -36,10 +37,21 @@ function EditAuction() {
 
   const handleChange = (e) => {
     const { name, value, type, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === "file" ? files[0] : value,
-    }));
+    if (type === "file" && name === "logo") {
+      const file = files[0];
+      setFormData((prev) => ({
+        ...prev,
+        [name]: file,
+      }));
+      if (file) {
+        setLogoPreview(URL.createObjectURL(file));
+      }
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -63,9 +75,9 @@ function EditAuction() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <img
-                src={selectedAuction?.logo}
+                src={logoPreview || selectedAuction?.logo}
                 alt="AuctionLogo"
-                className="h-24 w-32"
+                className="h-24 w-32 object-contain"
               />
             </div>
             {formFieldsData.map((field, i) => (

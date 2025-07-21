@@ -8,6 +8,7 @@ import logo from "../../assets/icon2.png";
 import { LuLogOut } from "react-icons/lu";
 import { ImHammer2 } from "react-icons/im";
 import { RiMenuUnfold3Fill, RiMenuUnfold4Fill } from "react-icons/ri";
+import { FaUser } from "react-icons/fa";
 
 function DashboardLayout() {
   const isSidebarOpen = useSelector((state) => state?.sidebar?.isSidebarOpen);
@@ -84,16 +85,27 @@ function DashboardLayout() {
         }`}
       >
         <div>
-          <ul className="p-4">
+          <ul className="p-4 flex flex-col gap-2">
             <li className="w-full">
               <Link
                 to="/dashboard"
-                className="flex bg-gray-200 p-1.5 w-full rounded hover:bg-gray-300 gap-2 items-center text-lg font-medium"
+                className="flex bg-gray-200 p-1.5 w-full rounded hover:bg-blue-500 gap-2 items-center text-lg font-medium transition hover:text-white"
               >
                 <span>
                   <ImHammer2 />
                 </span>
                 My Auction
+              </Link>
+            </li>
+            <li className="w-full">
+              <Link
+                to="/dashboard/profile"
+                className="flex bg-gray-200 p-1.5 w-full rounded hover:bg-blue-500 gap-2 items-center text-lg font-medium transition hover:text-white"
+              >
+                <span>
+                  <FaUser size={16} />
+                </span>
+                Profile
               </Link>
             </li>
           </ul>
