@@ -17,4 +17,6 @@ export const deleteAuction = (userId) => api.delete(`/auction/delete/${userId}`)
 // Create Team
 export const createTeamsApi = (formData) => api.post(`/teams/create`,formData);
 export const getAllTeamsApi = (auctionId) => api.get(`/teams/get-all/${auctionId}`);
+export const getTeam = (auctionId, teamId) => api.get(`/teams/get-one/${auctionId}/${teamId}`);
+export const updateTeamApi = (formData) => api.put(`/teams/update`,formData);
 export const deleteTeam = (auctionId,teamId) => api.delete(`/teams/delete/${auctionId}/${teamId}`);

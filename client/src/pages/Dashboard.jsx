@@ -5,7 +5,7 @@ import { auctionList } from "../data/adminTables";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Loader from "../components/common/Loader";
 import { deleteAuctionById } from "../redux/slice/auctionSlice";
-import { FaUser } from "react-icons/fa6";
+import { FaUser, FaUserGroup } from "react-icons/fa6";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -71,10 +71,17 @@ function Dashboard() {
                           </button>
                           <button
                             className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full"
+                            // onClick={() => navigate(`teams/${data._id}`)}
+                            title="All Players"
+                          >
+                            <FaUser size={16} />
+                          </button>
+                          <button
+                            className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full"
                             onClick={() => navigate(`teams/${data._id}`)}
                             title="All Teams"
                           >
-                            <FaUser size={16} />
+                            <FaUserGroup size={16} />
                           </button>
                         </div>
                       </td>

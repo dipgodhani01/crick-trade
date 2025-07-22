@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { teamsList } from "../../../data/adminTables";
@@ -6,8 +6,12 @@ import { deleteTeamById, getAllTeams } from "../../../redux/slice/teamsSlice";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { formatDate } from "../../../helper/helper";
 import Loader from "../../common/Loader";
+import { FaImage } from "react-icons/fa6";
+import { IoClose } from "react-icons/io5";
 
 function TeamList() {
+  const [openPopup, setOpenPopup] = useState(false);
+  const [selectedLogo, setSelectedLogo] = useState(null); // <-- new state
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { auctionId } = useParams();
@@ -54,10 +58,17 @@ function TeamList() {
                 </thead>
                 <tbody>
                   {teams?.map((data, i) => (
-                    <tr key={i} className="">
+                    <tr key={i}>
                       <td className="border border-gray-200 px-4 py-2">
                         <div className="flex gap-2 text-blue-800">
-                          <button className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full">
+                          <button
+                            className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full"
+                            onClick={() =>
+                              navigate(
+                                `/dashboard/team-edit/${data.auction}/${data._id}`
+                              )
+                            }
+                          >
                             <MdEdit size={20} />
                           </button>
                           <button
@@ -67,6 +78,15 @@ function TeamList() {
                             }
                           >
                             <MdDelete size={20} />
+                          </button>
+                          <button
+                            className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full"
+                            onClick={() => {
+                              setSelectedLogo(data?.logo);
+                              setOpenPopup(true);
+                            }}
+                          >
+                            <FaImage size={18} />
                           </button>
                         </div>
                       </td>
@@ -92,6 +112,31 @@ function TeamList() {
               <div className="p-4 text-center text-red-600 text-xl md:text-2xl font-medium">
                 No Teams Available
               </div>
+            )}
+          </div>
+        </div>
+      )}
+      {openPopup && (
+        <div
+          className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center"
+          onClick={() => setOpenPopup(false)}
+        >
+          <div className="bg-white rounded shadow-lg relative w-[90%] max-w-md">
+            <button
+              className="absolute -top-7 p-1 right-0 rounded bg-white text-gray-700 hover:text-red-500 text-xl"
+              onClick={() => setOpenPopup(false)}
+            >
+              <IoClose size={24} />
+            </button>
+
+            {selectedLogo ? (
+              <img
+                src={selectedLogo}
+                alt="Team Logo"
+                className="w-full h-full object-contain max-h-96"
+              />
+            ) : (
+              <p className="text-gray-600">No logo found.</p>
             )}
           </div>
         </div>

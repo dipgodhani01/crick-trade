@@ -17,6 +17,7 @@ import EditAuction from "./components/dashboard/auction/EditAuction";
 import UserProfile from "./components/dashboard/profile/UserProfile";
 import TeamList from "./components/dashboard/teams/TeamList";
 import AddTeam from "./components/dashboard/teams/AddTeam";
+import EditTeam from "./components/dashboard/teams/EditTeam";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="auction-edit/:auctionId" element={<EditAuction />} />
           <Route path="teams/:auctionId" element={<TeamList />} />
           <Route path="team-add/:auctionId" element={<AddTeam />} />
+          <Route path="team-edit/:auctionId/:teamId" element={<EditTeam />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
