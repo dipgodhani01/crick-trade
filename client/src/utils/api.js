@@ -7,8 +7,14 @@ const api = axios.create({
 
 export const googleAuth = (code) => api.get(`/auth/google?code=${code}`);
 export const userProfile = () => api.get(`/auth/profile`);
+// Create Auction
 export const createAuc = (formData) => api.post(`/auction/create-auction`,formData);
 export const getAuctions = (userId) => api.get(`/auction/get/${userId}`);
 export const getSingleAuction = (auctionId) => api.get(`/auction/one-auction/${auctionId}`);
 export const updateAuctionApi = (auctionId, formData) => api.put(`/auction/update/${auctionId}`,formData);
 export const deleteAuction = (userId) => api.delete(`/auction/delete/${userId}`);
+
+// Create Team
+export const createTeamsApi = (formData) => api.post(`/teams/create`,formData);
+export const getAllTeamsApi = (auctionId) => api.get(`/teams/get-all/${auctionId}`);
+export const deleteTeam = (auctionId,teamId) => api.delete(`/teams/delete/${auctionId}/${teamId}`);

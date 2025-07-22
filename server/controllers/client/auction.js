@@ -98,7 +98,7 @@ exports.deleteAuction = async (req, res) => {
 };
 
 exports.getSingleAuction = async (req, res) => {
-  try {    
+  try {
     const auction = await Auction.findById(req.params.auctionId);
 
     if (!auction) {
@@ -117,7 +117,9 @@ exports.updateAuction = async (req, res) => {
   try {
     const auction = await Auction.findById(req.params.id);
     if (!auction) {
-      return res.status(404).json({ success: false, message: "Auction not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Auction not found" });
     }
 
     const {
@@ -130,16 +132,20 @@ exports.updateAuction = async (req, res) => {
       playersPerTeam,
     } = req.body;
 
-    // ✅ Handle logo update (and delete old one if exists)
     if (req.file) {
-      const oldLogoPath = auction.logo?.replace(`${req.protocol}://${req.get("host")}`, "");
+      const oldLogoPath = auction.logo?.replace(
+        `${req.protocol}://${req.get("host")}`,
+        ""
+      );
       const fullPath = path.join(__dirname, "../../../", oldLogoPath);
 
       if (fs.existsSync(fullPath)) {
         fs.unlinkSync(fullPath);
       }
 
-      auction.logo = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+      auction.logo = `${req.protocol}://${req.get("host")}/uploads/${
+        req.file.filename
+      }`;
     }
 
     auction.name = name || auction.name;

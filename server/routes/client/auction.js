@@ -1,5 +1,5 @@
 const { createAuction, getAuction, deleteAuction, getSingleAuction, updateAuction } = require("../../controllers/client/auction");
-const upload = require("../../middlewares/uploadMiddleware");
+const upload = require("../../middlewares/uploadMiddleware.js");
 
 const router = require("express").Router();
 

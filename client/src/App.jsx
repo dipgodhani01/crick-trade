@@ -15,6 +15,8 @@ import Dashboard from "./pages/Dashboard";
 import AddAuction from "./components/dashboard/auction/AddAuction";
 import EditAuction from "./components/dashboard/auction/EditAuction";
 import UserProfile from "./components/dashboard/profile/UserProfile";
+import TeamList from "./components/dashboard/teams/TeamList";
+import AddTeam from "./components/dashboard/teams/AddTeam";
 
 function App() {
   return (
@@ -41,6 +43,8 @@ function App() {
           <Route path="profile" element={<UserProfile />} />
           <Route path="auction-add" element={<AddAuction />} />
           <Route path="auction-edit/:auctionId" element={<EditAuction />} />
+          <Route path="teams/:auctionId" element={<TeamList />} />
+          <Route path="team-add/:auctionId" element={<AddTeam />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

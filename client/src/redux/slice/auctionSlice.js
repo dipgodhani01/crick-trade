@@ -1,5 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createAuc, deleteAuction, getAuctions, getSingleAuction, updateAuctionApi } from "../../utils/api";
+import {
+  createAuc,
+  deleteAuction,
+  getAuctions,
+  getSingleAuction,
+  updateAuctionApi,
+} from "../../utils/api";
 import { toast } from "react-toastify";
 
 export const createAuction = createAsyncThunk(
@@ -37,9 +43,9 @@ export const getUsersAuction = createAsyncThunk(
 
 export const getAuctionById = createAsyncThunk(
   "auction/getAuctionById",
-  async (auctionId, { rejectWithValue }) => {    
+  async (auctionId, { rejectWithValue }) => {
     try {
-      const response = await getSingleAuction(auctionId);      
+      const response = await getSingleAuction(auctionId);
       return response.data.data;
     } catch (error) {
       return rejectWithValue(
@@ -53,7 +59,7 @@ export const updateAuction = createAsyncThunk(
   "auction/updateAuction",
   async ({ auctionId, formData }, { rejectWithValue, dispatch, getState }) => {
     try {
-      const response = await updateAuctionApi(auctionId, formData);      
+      const response = await updateAuctionApi(auctionId, formData);
       const userId = getState().user.user._id;
       dispatch(getUsersAuction(userId));
       toast.success("Auction updated successfully");
@@ -88,7 +94,7 @@ const auctionSlice = createSlice({
     loading: false,
     error: null,
     auctions: [],
-    selectedAuction:null,
+    selectedAuction: null,
   },
 
   extraReducers: (builder) => {
@@ -128,7 +134,6 @@ const auctionSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
-
       .addCase(updateAuction.pending, (state) => {
         state.loading = true;
       })

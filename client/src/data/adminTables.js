@@ -9,3 +9,11 @@ export const auctionList = [
   "Player Per Team",
   "Auction Date",
 ];
+
+
+export const teamsList = [
+  "Actions",
+  "Team Logo",
+  "Team Name",
+  "Created At",
+];

@@ -7,6 +7,7 @@ const { port, uri } = require("./config");
 
 const userAuthRouter = require("./routes/client/user");
 const auctionRouter = require("./routes/client/auction");
+const teamsRouter = require("./routes/client/teams");
 
 const app = express();
 
@@ -16,7 +17,10 @@ mongoose
   .catch((err) => console.log("Error : ", err));
 
 app.use(express.json());
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use(
+  "/uploads",
+  express.static(path.join(__dirname, "../../cricktrade-images/uploads"))
+);
 
 app.use(
   cors({
@@ -28,5 +32,6 @@ app.use(
 
 app.use("/api/auth", userAuthRouter);
 app.use("/api/auction", auctionRouter);
+app.use("/api/teams", teamsRouter);
 
 app.listen(port, () => console.log(`Server up at port ${port}`));
