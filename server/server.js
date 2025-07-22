@@ -8,6 +8,7 @@ const { port, uri } = require("./config");
 const userAuthRouter = require("./routes/client/user");
 const auctionRouter = require("./routes/client/auction");
 const teamsRouter = require("./routes/client/teams");
+const playersRouter = require("./routes/client/players");
 
 const app = express();
 
@@ -33,5 +34,6 @@ app.use(
 app.use("/api/auth", userAuthRouter);
 app.use("/api/auction", auctionRouter);
 app.use("/api/teams", teamsRouter);
+app.use("/api/players", playersRouter);
 
 app.listen(port, () => console.log(`Server up at port ${port}`));

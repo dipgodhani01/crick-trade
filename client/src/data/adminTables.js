@@ -17,3 +17,15 @@ export const teamsList = [
   "Team Name",
   "Created At",
 ];
+export const playersList = [
+  "Actions",
+  "Name",
+  "Minimum Bid",
+  "Sport Category",
+  "Mobile Number",
+  "Age",
+  "T-shirt Size",
+  "Trouser size",
+  "Jersey Name",
+  "Jersey Number",
+];

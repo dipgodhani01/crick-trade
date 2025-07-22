@@ -3,7 +3,6 @@
       label: "Auction Logo",
       name: "logo",
       type: "file",
-      required: true,
     },
     {
       label: "Auction Name",

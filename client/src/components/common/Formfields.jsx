@@ -19,7 +19,9 @@ const Formfields = ({
             required={required}
             className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-black"
           >
-            <option value="">Select {label}</option>
+            <option value="" className="text-gray-500">
+              Select {label}
+            </option>
             {options.map((option, idx) => (
               <option key={idx} value={option.value}>
                 {option.label}
