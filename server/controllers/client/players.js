@@ -152,7 +152,7 @@ exports.updatePlayer = async (req, res) => {
     }
 
     player.name = name;
-    player.minimumBid = '100000' || player.minimumBid;
+    player.minimumBid = "100000" || player.minimumBid;
     player.category = sportCategory;
     player.phone = phone;
     player.age = age;
@@ -167,6 +167,34 @@ exports.updatePlayer = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Player updated successfully",
+      data: player,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: "Server error!" });
+  }
+};
+
+exports.changePlayerBasePrice = async (req, res) => {
+  try {
+    const { minimumBid, playerId, auctionId } = req.body;
+
+    const player = await Player.findOne({ _id: playerId, auction: auctionId });
+
+    if (!player) {
+      return res.status(404).json({
+        success: false,
+        message: "Player not found or doesn't belong to this auction",
+      });
+    }
+
+    player.minimumBid = minimumBid;
+
+    await player.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Player base price updated successfully",
       data: player,
     });
   } catch (err) {

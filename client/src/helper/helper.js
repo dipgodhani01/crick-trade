@@ -6,3 +6,9 @@ export const formatDate = (isoDate) => {
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 };
+
+export function formatIndianNumber(price) {
+  const number = Number(price);
+  if (isNaN(number)) return String(price);
+  return number.toLocaleString("en-IN").toString();
+}

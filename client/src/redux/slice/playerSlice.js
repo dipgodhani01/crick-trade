@@ -1,5 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { createPlayersApi, deletePlayer, getAllPlayersApi, getPlayerByIdApi, updatePlayerApi } from "../../utils/api";
+import {
+  createPlayersApi,
+  deletePlayer,
+  getAllPlayersApi,
+  getPlayerByIdApi,
+  updatePlayerApi,
+  updatePlayerBasePriceApi,
+} from "../../utils/api";
 import { toast } from "react-toastify";
 import { getUsersAuction } from "./auctionSlice";
 
@@ -54,7 +61,6 @@ export const deletePlayerById = createAsyncThunk(
 export const getPlayerById = createAsyncThunk(
   "players/getPlayerById",
   async ({ auctionId, playerId }, { rejectWithValue }) => {
-    
     try {
       const response = await getPlayerByIdApi(auctionId, playerId);
       return response.data.data;
@@ -69,7 +75,28 @@ export const updatePlayer = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await updatePlayerApi(formData);
-      toast.success("Team updated successfully");
+      toast.success("Player updated successfully");
+      return response.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+export const updatePlayerBasePrice = createAsyncThunk(
+  "players/updatePlayerBasePrice",
+  async (
+    { minimumBid, playerId, auctionId },
+    { rejectWithValue, dispatch }
+  ) => {
+    try {
+      const response = await updatePlayerBasePriceApi({
+        minimumBid,
+        playerId,
+        auctionId,
+      });
+      dispatch(getAllPlayers(auctionId));
+      toast.success("Player base-price updated successfully");
       return response.data;
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
@@ -141,6 +168,16 @@ const playerSlice = createSlice({
         state.loading = false;
       })
       .addCase(updatePlayer.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(updatePlayerBasePrice.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updatePlayerBasePrice.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updatePlayerBasePrice.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

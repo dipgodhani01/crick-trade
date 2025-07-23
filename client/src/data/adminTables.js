@@ -20,7 +20,7 @@ export const teamsList = [
 export const playersList = [
   "Actions",
   "Name",
-  "Minimum Bid",
+  "Base Price",
   "Sport Category",
   "Mobile Number",
   "Age",

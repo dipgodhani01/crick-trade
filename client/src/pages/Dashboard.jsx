@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { formatDate } from "../helper/helper";
+import { formatDate, formatIndianNumber } from "../helper/helper";
 import { auctionList } from "../data/adminTables";
 import { MdDelete, MdEdit } from "react-icons/md";
 import Loader from "../components/common/Loader";
@@ -99,13 +99,13 @@ function Dashboard() {
                         {data.sportType}
                       </td>
                       <td className="border border-gray-200 px-4 py-2">
-                        {data.pointPerTeam}
+                        {formatIndianNumber(data.pointPerTeam)}
                       </td>
                       <td className="border border-gray-200 px-4 py-2">
-                        {data.minimumBid}
+                        {formatIndianNumber(data.minimumBid)}
                       </td>
                       <td className="border border-gray-200 px-4 py-2">
-                        {data.bidIncrement}
+                        {formatIndianNumber(data.bidIncrement)}
                       </td>
                       <td className="border border-gray-200 px-4 py-2">
                         {data.playersPerTeam}

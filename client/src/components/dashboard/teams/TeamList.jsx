@@ -11,7 +11,7 @@ import { IoClose } from "react-icons/io5";
 
 function TeamList() {
   const [openPopup, setOpenPopup] = useState(false);
-  const [selectedLogo, setSelectedLogo] = useState(null); // <-- new state
+  const [selectedLogo, setSelectedLogo] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { auctionId } = useParams();
