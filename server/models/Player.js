@@ -42,6 +42,11 @@ const playerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    status: {
+      type: String,
+      enum: ["pending", "sold", "unsold"],
+      default: "pending",
+    },
     auction: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Auction",

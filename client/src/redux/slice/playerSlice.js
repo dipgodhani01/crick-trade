@@ -4,6 +4,7 @@ import {
   deletePlayer,
   getAllPlayersApi,
   getPlayerByIdApi,
+  getRandomPlayerApi,
   updatePlayerApi,
   updatePlayerBasePriceApi,
 } from "../../utils/api";
@@ -83,6 +84,7 @@ export const updatePlayer = createAsyncThunk(
     }
   }
 );
+
 export const updatePlayerBasePrice = createAsyncThunk(
   "players/updatePlayerBasePrice",
   async (
@@ -105,6 +107,21 @@ export const updatePlayerBasePrice = createAsyncThunk(
   }
 );
 
+export const getRandomPlayer = createAsyncThunk(
+  "players/getRandomPlayer",
+  async (auctionId, { rejectWithValue }) => {
+    console.log(auctionId);
+    
+    try {
+      const response = await getRandomPlayerApi(auctionId);
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+      return rejectWithValue(error.response?.data?.message);
+    }
+  }
+);
+
 const playerSlice = createSlice({
   name: "players",
   initialState: {
@@ -112,6 +129,7 @@ const playerSlice = createSlice({
     error: null,
     players: [],
     selectedPlayer: null,
+    randomPlayer: null,
   },
 
   extraReducers: (builder) => {
@@ -178,6 +196,18 @@ const playerSlice = createSlice({
         state.loading = false;
       })
       .addCase(updatePlayerBasePrice.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(getRandomPlayer.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getRandomPlayer.fulfilled, (state, action) => {
+        state.loading = false;
+        state.randomPlayer = action.payload;
+      })
+      .addCase(getRandomPlayer.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

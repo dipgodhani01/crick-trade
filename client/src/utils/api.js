@@ -45,3 +45,5 @@ export const updatePlayerBasePriceApi = ({ minimumBid, playerId, auctionId }) =>
     playerId,
     auctionId,
   });
+export const getRandomPlayerApi = (auctionId) =>
+  api.get(`/players/random-player?auctionId=${auctionId}`);

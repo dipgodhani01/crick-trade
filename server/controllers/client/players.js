@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const Player = require("../../models/Player");
+const { default: mongoose } = require("mongoose");
 
 exports.createPlayer = async (req, res) => {
   try {
@@ -35,6 +36,7 @@ exports.createPlayer = async (req, res) => {
       ts_name: jerseyName,
       ts_number: jerseyNumber,
       auction: auctionId,
+      status:'pending',
     });
 
     await newPlayer.save();
@@ -200,5 +202,43 @@ exports.changePlayerBasePrice = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ success: false, message: "Server error!" });
+  }
+};
+
+
+exports.getRandomPlayer = async (req, res) => {
+  try {
+    const { auctionId } = req.query;
+
+    if (!auctionId) {
+      return res.status(400).json({
+        success: false,
+        message: "Auction Not Found!",
+      });
+    }
+
+    const [player] = await Player.aggregate([
+      {
+        $match: {
+          auction: new mongoose.Types.ObjectId(auctionId),
+          status: "pending",
+        },
+      },
+      { $sample: { size: 1 } },
+    ]);
+
+    if (!player) {
+      return res.status(404).json({
+        success: false,
+        message: "No pending players found for this auction",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: player,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };

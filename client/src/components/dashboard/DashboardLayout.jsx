@@ -37,8 +37,13 @@ function DashboardLayout() {
       <div
         className={`h-[65px] fixed left-0 right-0 top-0 flex gap-2 border  items-center p-2 md:p-4 transition-all ease-in-out duration-300 z-[40]  bg-gradient-to-br bg-white`}
       >
-        <div className="flex items-center gap-2 md:w-[265px] w-[60px]">
-          <img src={logo} alt="logo" className="w-10 h-10" />
+        <div className="flex items-center gap-2 md:w-[265px] w-[60px] cursor-pointer">
+          <img
+            src={logo}
+            alt="logo"
+            className="w-10 h-10"
+            onClick={() => navigate("/dashboard")}
+          />
           <h1 className="text-2xl font-bold md:block">Cricktrade</h1>
         </div>
         <div className="flex items-center justify-end w-full lg:justify-between ">
