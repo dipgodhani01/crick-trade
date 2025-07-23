@@ -62,6 +62,10 @@ function PlayersList() {
             + Add Player
           </button>
 
+          <div className="p-4 text-center font-medium text-lg">
+            <p>Total Players : {players?.length}</p>
+          </div>
+
           <div className="mt-4 overflow-x-auto table-responsive">
             {players && players.length > 0 ? (
               <table className="border-collapse w-full border border-gray-200 mb-3 min-w-[1280px]">

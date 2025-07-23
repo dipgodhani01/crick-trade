@@ -21,6 +21,7 @@ import EditTeam from "./components/dashboard/teams/EditTeam";
 import AddPlayer from "./components/dashboard/players/AddPlayer";
 import PlayersList from "./components/dashboard/players/PlayersList";
 import EditPlayers from "./components/dashboard/players/EditPlayers";
+import AuctionDashboard from "./components/auction-dashboard/AuctionDashboard";
 
 function App() {
   return (
@@ -60,6 +61,14 @@ function App() {
             element={<EditPlayers />}
           />
         </Route>
+        <Route
+          path="/auction-dashboard/:auctionId"
+          element={
+            <ProtectedRoute>
+              <AuctionDashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <ToastContainer position="bottom-right" autoClose={1500} />

@@ -39,7 +39,7 @@ function DashboardLayout() {
       >
         <div className="flex items-center gap-2 md:w-[265px] w-[60px]">
           <img src={logo} alt="logo" className="w-10 h-10" />
-          <h1 className="text-2xl font-bold md:block ">Cricktrade</h1>
+          <h1 className="text-2xl font-bold md:block">Cricktrade</h1>
         </div>
         <div className="flex items-center justify-end w-full lg:justify-between ">
           <div className="items-center justify-center hidden gap-2 lg:flex">

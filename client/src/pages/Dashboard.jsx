@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { formatDate, formatIndianNumber } from "../helper/helper";
 import { auctionList } from "../data/adminTables";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDashboard, MdDelete, MdEdit } from "react-icons/md";
 import Loader from "../components/common/Loader";
 import { deleteAuctionById } from "../redux/slice/auctionSlice";
 import { FaUser, FaUserGroup } from "react-icons/fa6";
@@ -82,6 +82,15 @@ function Dashboard() {
                             title="All Teams"
                           >
                             <FaUserGroup size={16} />
+                          </button>
+                          <button
+                            className="bg-gray-100 hover:bg-gray-200 transition h-8 w-8 flex items-center justify-center rounded-full"
+                            onClick={() =>
+                              navigate(`/auction-dashboard/${data._id}`)
+                            }
+                            title="Auction Dashboard"
+                          >
+                            <MdDashboard size={16} />
                           </button>
                         </div>
                       </td>
