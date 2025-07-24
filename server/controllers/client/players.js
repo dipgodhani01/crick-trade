@@ -206,28 +206,23 @@ exports.changePlayerBasePrice = async (req, res) => {
 };
 
 
-exports.getRandomPlayer = async (req, res) => {
+exports.getPendingPlayers = async (req, res) => {
   try {
     const { auctionId } = req.query;
 
     if (!auctionId) {
       return res.status(400).json({
         success: false,
-        message: "Auction Not Found!",
+        message: "Auction ID is required",
       });
     }
 
-    const [player] = await Player.aggregate([
-      {
-        $match: {
-          auction: new mongoose.Types.ObjectId(auctionId),
-          status: "pending",
-        },
-      },
-      { $sample: { size: 1 } },
-    ]);
+    const players = await Player.find({
+      auction: new mongoose.Types.ObjectId(auctionId),
+      status: "pending",
+    });
 
-    if (!player) {
+    if (!players || players.length === 0) {
       return res.status(404).json({
         success: false,
         message: "No pending players found for this auction",
@@ -236,7 +231,7 @@ exports.getRandomPlayer = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: player,
+      data: players,
     });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
