@@ -3,7 +3,6 @@ import {
   createPlayersApi,
   deletePlayer,
   getAllPlayersApi,
-  getPendingPlayersApi,
   getPlayerByIdApi,
   updatePlayerApi,
   updatePlayerBasePriceApi,
@@ -107,19 +106,6 @@ export const updatePlayerBasePrice = createAsyncThunk(
   }
 );
 
-export const getPendingPlayers = createAsyncThunk(
-  "players/getPendingPlayers",
-  async (auctionId, { rejectWithValue }) => {
-    try {
-      const response = await getPendingPlayersApi(auctionId);
-      return response.data.data;
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Something went wrong");
-      return rejectWithValue(error.response?.data?.message);
-    }
-  }
-);
-
 const playerSlice = createSlice({
   name: "players",
   initialState: {
@@ -127,7 +113,6 @@ const playerSlice = createSlice({
     error: null,
     players: [],
     selectedPlayer: null,
-    pending: [],
   },
 
   extraReducers: (builder) => {
@@ -194,18 +179,6 @@ const playerSlice = createSlice({
         state.loading = false;
       })
       .addCase(updatePlayerBasePrice.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-      .addCase(getPendingPlayers.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getPendingPlayers.fulfilled, (state, action) => {
-        state.loading = false;
-        state.pending = action.payload;
-      })
-      .addCase(getPendingPlayers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

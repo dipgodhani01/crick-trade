@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getAllTeams } from "../../redux/slice/teamsSlice";
-import { getPendingPlayers } from "../../redux/slice/playerSlice";
+import { getAllPlayers } from "../../redux/slice/playerSlice";
 import Loader from "../common/Loader";
 import { formatIndianNumber } from "../../helper/helper";
 
@@ -11,85 +11,99 @@ function AuctionDashboard() {
   const { auctionId } = useParams();
   const dispatch = useDispatch();
   const { teams, loading } = useSelector((state) => state.teams);
-  const { pending } = useSelector((state) => state.players);
+  const { players } = useSelector((state) => state.players);
 
   useEffect(() => {
     dispatch(getAllTeams(auctionId));
-    dispatch(getPendingPlayers(auctionId));
+    dispatch(getAllPlayers(auctionId));
   }, [auctionId]);
 
   useEffect(() => {
-    if (pending && pending.length > 0) {
-      const randomIndex = Math.floor(Math.random() * pending.length);
-      setRandomPlayer(pending[randomIndex]);
+    if (players && players.length > 0) {
+      const i = Math.floor(Math.random() * players.length);
+      setRandomPlayer(players[i]);
     }
-  }, [pending]);
+  }, [players]);
 
-  console.log("Pending :", pending);
+  console.log("Players :", players);
 
   return (
     <div>
       {loading ? (
         <Loader />
+      ) : players && players.length === 0 ? (
+        <div className="min-h-screen w-full flex items-center justify-center bg-black text-white">
+          <p className="text-2xl md:text-4xl font-bold">No player found</p>
+        </div>
       ) : (
-        <div className="h-screen w-screen space_bg flex md:flex-row flex-col gap-4">
-          <div className="w-full md:w-[45%] text-white p-4">
-            <div className="md:h-[300px] lg:h-[400px] xl:h-[500px]">
+        <div className="min-h-screen w-full space_bg flex flex-col lg:flex-row gap-6 p-4">
+          {/* Left Side */}
+          <div className="w-full lg:w-[45%] text-white flex flex-col gap-4">
+            <div className="w-full h-[300px] md:h-[400px] lg:h-[500px] overflow-hidden rounded-lg">
               <img
                 src={randomPlayer?.logo}
-                alt="Player Photo"
-                className="h-full w-full"
+                alt="Player"
+                className="w-full h-full object-cover rounded-lg"
               />
             </div>
-            <p className="text-2xl md:text-3xl mt-4 ">
-              Base Price : {formatIndianNumber(randomPlayer?.minimumBid)}
-            </p>
-            <div className="p-4 mt-4 h-auto bg-black">
-              <h2 className="text-2xl md:text-3xl font-medium mb-6 text-center">
+
+            <div className="p-4 bg-black">
+              <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-center">
+                Base Price:{" "}
+                <span className="text-green-500">
+                  {formatIndianNumber(randomPlayer?.minimumBid) || "0"}
+                </span>
+              </p>
+            </div>
+
+            <div className="p-4 mt-6 bg-black rounded-lg shadow-md">
+              <h2 className="text-2xl md:text-3xl font-medium mb-4 text-center">
                 Player Details
               </h2>
-              <p className="text-xl md:text-2xl">Name : {randomPlayer?.name}</p>
-              <p className="text-xl md:text-2xl">Age : {randomPlayer?.age}</p>
-              <p className="text-xl md:text-2xl">
-                Sports Category : {randomPlayer?.category}
-              </p>
-              <p className="text-xl md:text-2xl">
-                Contact : +91 {randomPlayer?.phone}
-              </p>
+              <div className="space-y-2">
+                <p className="text-lg md:text-xl">
+                  Name: {randomPlayer?.name || "N/A"}
+                </p>
+                <p className="text-lg md:text-xl">
+                  Age: {randomPlayer?.age || "N/A"}
+                </p>
+                <p className="text-lg md:text-xl">
+                  Sports Category: {randomPlayer?.category || "N/A"}
+                </p>
+                <p className="text-lg md:text-xl">
+                  Contact: +91 {randomPlayer?.phone || "N/A"}
+                </p>
+              </div>
             </div>
           </div>
-          <div className="w-full md:w-[55%] text-white">2</div>
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 h-[600px] w-full gap-4">
-            <div>
-              <img
-                src={randomPlayer?.logo}
-                alt="Player Photo"
-                className="h-full w-full"
-              />
-            </div>
-            <div className="p-5 flex flex-col justify-between">
-              <div className="grid grid-cols-2 gap-6">
-                {teams && teams?.length > 0 ? (
-                  teams?.map((team, i) => (
-                    <button
-                      key={i}
-                      className="py-2 px-6 w-full bg-purple-800 text-white text-lg font-semibold rounded shadow hover:bg-purple-700 transition"
-                    >
-                      {team.name}
-                    </button>
-                  ))
-                ) : (
-                  <p className="text-white text-lg mt-4">
-                    No player available.
-                  </p>
-                )}
-              </div>
-              <div>
-                <button className="text-white">Sold</button>
-                <button className="text-white">Unsold</button>
+
+          {/* Right Side */}
+          <div className="w-full lg:w-[55%] text-white flex flex-col justify-between">
+            <div className="grid md:grid-cols-2 gap-4">
+              {teams && teams.length > 0 ? (
+                teams.map((team, i) => (
+                  <button
+                    key={i}
+                    className="py-2 px-4 bg-purple-700 hover:bg-purple-800 rounded text-lg shadow text-center font-medium transition md:text-xl"
+                  >
+                    {team.name}
+                  </button>
+                ))
+              ) : (
+                <p className="col-span-full text-center text-lg">
+                  No Teams Available.
+                </p>
+              )}
+              <div className="mt-10 flex flex-wrap gap-4 justify-center md:justify-start">
+                <button className="py-2 px-6 bg-green-600 hover:bg-green-700 text-white rounded shadow transition">
+                  Sold
+                </button>
+                <button className="py-2 px-6 bg-red-600 hover:bg-red-700 text-white rounded shadow transition">
+                  Unsold
+                </button>
               </div>
             </div>
-          </div> */}
+          </div>
         </div>
       )}
     </div>

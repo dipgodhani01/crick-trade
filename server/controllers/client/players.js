@@ -1,7 +1,6 @@
 const path = require("path");
 const fs = require("fs");
 const Player = require("../../models/Player");
-const { default: mongoose } = require("mongoose");
 
 exports.createPlayer = async (req, res) => {
   try {
@@ -205,35 +204,3 @@ exports.changePlayerBasePrice = async (req, res) => {
   }
 };
 
-
-exports.getPendingPlayers = async (req, res) => {
-  try {
-    const { auctionId } = req.query;
-
-    if (!auctionId) {
-      return res.status(400).json({
-        success: false,
-        message: "Auction ID is required",
-      });
-    }
-
-    const players = await Player.find({
-      auction: new mongoose.Types.ObjectId(auctionId),
-      status: "pending",
-    });
-
-    if (!players || players.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No pending players found for this auction",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      data: players,
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
